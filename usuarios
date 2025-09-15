@@ -46,6 +46,23 @@ switch ($method) {
               $stmt->execute();
               echo json_encode(["status"=> "ok", "insert_id => $stmt->insert_id"]);
               break;
-}
 
+              case 'PUT':
+                $data = json_decode(file_get_contents("php://input"), true);
+             $stmt = $conn->prepare("UPDATE INTO usuarios SET LOGIN=?, NOME=?, EMAIL=?, SENHA=?, ATIVO=? WHERE ID=?");
+              $stmt->bind_param("ssssii", $data['LOGIN'], $data['NOME'], $data['EMAIL'], $data['SENHA'], $data['ATIVO'], $data['ID']);
+              $stmt->execute();
+              echo json_encode(["status"=> "ok"]);
+              break;
+
+              case 'DELETE ':
+
+                $ID = $_GET['id'];
+                 $stmt = $conn->prepare("DELETE FROM usuarios WHERE ID=?");
+              $stmt->bind_param("i", $id);
+              $stmt->execute();
+              echo json_encode(["status"=> "ok"]);
+              break;
+
+}
 ?>
