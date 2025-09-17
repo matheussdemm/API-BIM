@@ -30,6 +30,68 @@
     </style>
 </head>
 <body>
-    
+    <H1>Gerenciar Cadastro dos Membros</H1>
+    <div>
+        <input type="hidden" id="id">
+        <input type="text" id="login" placeholder="Login">
+        <input type="text" id="nome" placeholder="Nome">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="senha" placeholder="Senha">
+<select>
+    <option value="1">Ativo</option>
+        <option value="1">Cancelar</option>
+</select>
+<button onclick="salvar()">Salvar</button>
+    <button onclick="limpar()">Cancelar</button>
+</div>
+
+<div>
+<input type="text" id="pesquisa" placeholder="Pesquisar por Login ou nome">
+<button onclick="carregarPesquisa()">Pesquisa</button>
+    <button onclick="carregar()">Listar Todos</button>
+</div>
+<table id="tabela">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Login</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Ativo</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<script>
+    const API_URL =  "http://localhost/API-BIM/rotas/usuarios.php";
+    function carregar(pesquisa = ""){
+        let url = API_URL;
+        if(pesquisa) {
+            url += "?pesquisa=" + encodeURIComponent(pesquisa);
+        }
+        fetch(url)
+        .then(resposta => resposta.json())
+        .then(dados => {
+            console.log(dados)
+            dados.forEach(usuario => {
+                const tr = document.createElement("tr");
+                tr.innerHTML =
+                <td>${usuario.ID}</td>
+                 <td>${usuario.LOGIN}</td>
+                  <td>${usuario.NOME}</td>
+                   <td>${usuario.EMAIL}</td>
+                    <td>${usuario.ATIVO == 1 ? "Sim" : "Não"}</td>
+                    <td>
+                        <button onclick='editar(${JSON.stringify(usuario)})'>Editar</button>
+    <button onclick='excluir(${usuario.ID})>Excluir</button>
+                        <td>
+                    ;
+                    tbody.appendChild(tr);
+            });
+        }
+        
+    }
+</script>
 </body>
 </html>
